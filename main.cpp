@@ -23,9 +23,16 @@ public:
         this->numeProprietar = numeProprietar;
         this->suprafataUtila = suprafataUtila;
         if (discount < 0 || discount > 10) {
-            /// throw exceptie
+            try {
+                throw 11;
+            }
         }
         this->discount = discount;
+        catch(int ex) {
+            if(ex == 11){
+                cout<<"Discount-ul are o valoare invalida.\n";
+            }
+        }
     }
 
     double calcChirie();
@@ -33,7 +40,7 @@ public:
     friend bool operator==(Locuinta &x1, Locuinta &x2) {
         return x1.id == x2.id;
     };
-    friend bool operator<(Locuinta &x1, Locuinta &x2) {cout<<"!!";
+    friend bool operator<(Locuinta &x1, Locuinta &x2) {
         return x1.id < x2.id;
     }
     friend ostream &operator<<(ostream &out, Locuinta& g) {
@@ -58,7 +65,9 @@ public:
         }
 
     double calcChirie() {
-        /// TODO
+        double pret = PRET_PER_M2 * suprafataUtila;
+        pret = pret * (100 - discount) / 100;
+        return pret;
     }
 
 };
@@ -108,7 +117,6 @@ public:
     set<T*> getLocuinte() {
         return locuinte;
     }
-    //friend Gestiune& operator+=(Gestiune& g, const T& x);
 
     friend Gestiune& operator+=(Gestiune& g, T x) {
         T* ptr = &x;
